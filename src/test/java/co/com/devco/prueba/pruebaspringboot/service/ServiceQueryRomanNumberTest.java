@@ -1,10 +1,10 @@
 package co.com.devco.prueba.pruebaspringboot.service;
 
-import co.com.devco.prueba.pruebaspringboot.model.RomanNumber;
+import co.com.devco.prueba.pruebaspringboot.builder.RomanNumber;
 import co.com.devco.prueba.pruebaspringboot.repository.RepositoryRomanNumber;
 import co.com.devco.prueba.pruebaspringboot.vo.AnswerQueryRomanNumber;
 import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ class ServiceQueryRomanNumberTest {
 
     @Before
     private void init(){
-        romanNumberList = new ArrayList<RomanNumber>();
+        romanNumberList = new ArrayList<>();
         romanNumberList.add(RomanNumber.builder().id("1").symbol("I").value(1).build());
         romanNumberList.add(RomanNumber.builder().id("5").symbol("V").value(5).build());
         romanNumberList.add(RomanNumber.builder().id("10").symbol("X").value(10).build());
@@ -51,7 +51,7 @@ class ServiceQueryRomanNumberTest {
         //Given
         int arabicNumber = 235;
 
-        doReturn(romanNumberList).when(repositoryRomanNumber).takeCodesRomanNumber();
+        doReturn(romanNumberList).when(repositoryRomanNumber).findAll();
 
         //When
         AnswerQueryRomanNumber result = serviceQueryRomanNumber.query(arabicNumber);
@@ -61,8 +61,8 @@ class ServiceQueryRomanNumberTest {
         assertThat(result.getRomanNumber(), is("CCXXXV"));
 
         ArgumentCaptor<RomanNumber> idCaptor = ArgumentCaptor.forClass(RomanNumber.class);
-        verify(repositoryRomanNumber).takeCodesRomanNumber();
-        assertThat(idCaptor.getValue(), is(null));
+        verify(repositoryRomanNumber).findAll();
+        assertThat(idCaptor.getValue(), is(""));
     }
 
 }

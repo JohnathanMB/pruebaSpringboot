@@ -8,7 +8,9 @@ import co.com.devco.prueba.pruebaspringboot.vo.AnswerQueryRomanNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ServiceQueryRomanNumberImpl implements ServiceQueryRomanNumber {
@@ -25,7 +27,6 @@ public class ServiceQueryRomanNumberImpl implements ServiceQueryRomanNumber {
 
     @Override
     public AnswerQueryRomanNumber query(int n) {
-        List<RomanNumber> romanNumbers = repositoryRomanNumber.takeCodesRomanNumber();
-        return converterRomanNumber.convert(romanNumbers);
+        return converterRomanNumber.convert(repositoryRomanNumber.findAll());
     }
 }
